@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>千凝 - 智能安卓自动化引擎 | 开发中</title>
+    <style>
+        :root {
+            --bg-color: #0d0e12;
+            --text-main: #ffffff;
+            --text-muted: #8a8f98;
+            --accent-color: #00f0ff;
+            --accent-glow: rgba(0, 240, 255, 0.4);
+            --card-bg: #16181d;
+            --border-color: #2a2d35;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', system-ui, sans-serif; }
+
+        body { background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; overflow-x: hidden; }
+
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        nav { position: fixed; top: 0; width: 100%; padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; background: rgba(13, 14, 18, 0.8); backdrop-filter: blur(10px); z-index: 100; border-bottom: 1px solid var(--border-color); }
+        .logo { font-size: 24px; font-weight: 700; letter-spacing: 2px; color: var(--text-main); }
+
+        .hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 100px 20px 50px; background: radial-gradient(circle at 50% -20%, #1a2035 0%, var(--bg-color) 70%); }
+        .hero h1 { font-size: clamp(40px, 5vw, 72px); font-weight: 800; margin-bottom: 20px; }
+        .highlight { color: var(--accent-color); text-shadow: 0 0 20px var(--accent-glow); }
+        .cta-btn { display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 600; color: #000; background-color: var(--accent-color); border-radius: 30px; text-decoration: none; box-shadow: 0 0 20px var(--accent-glow); transition: all 0.3s ease; }
+
+        .demo-section { padding: 80px 20px; display: flex; justify-content: center; align-items: center; }
+        .phone-mockup { width: 300px; height: 600px; border-radius: 40px; background-color: #000; border: 10px solid #222; position: relative; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+        .scanner-line { position: absolute; width: 100%; height: 2px; background: var(--accent-color); box-shadow: 0 0 15px 5px var(--accent-glow); animation: scanScreen 4s infinite ease-in-out; }
+        .target-img { width: 80px; height: 80px; background: #333; border-radius: 16px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); border: 2px solid transparent; animation: targetHighlight 4s infinite ease-in-out; }
+        .click-ripple { position: absolute; top: 50%; left: 50%; width: 20px; height: 20px; background: rgba(255, 255, 255, 0.8); border-radius: 50%; animation: clickAction 4s infinite ease-in-out; }
+
+        @keyframes scanScreen { 0%, 10% { top: 10%; opacity: 0; } 45% { top: 52%; opacity: 1; } 50%, 100% { top: 52%; opacity: 0; } }
+        @keyframes targetHighlight { 0%, 40% { border-color: transparent; } 45%, 60% { border-color: var(--accent-color); box-shadow: 0 0 20px var(--accent-glow); } 100% { border-color: transparent; } }
+        @keyframes clickAction { 0%, 50% { transform: translate(-50%, -50%) scale(0); opacity: 0; } 52% { transform: translate(-50%, -50%) scale(1); opacity: 1; } 58% { transform: translate(-50%, -50%) scale(4); opacity: 0; } }
+
+        .features { padding: 100px 5%; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto; }
+        .feature-card { background: var(--card-bg); border: 1px solid var(--border-color); padding: 40px 30px; border-radius: 20px; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">千凝</div>
+    </nav>
+
+    <header class="hero">
+        <h1 class="reveal">看见，<br>即刻<span class="highlight">触发</span>。</h1>
+        <p class="reveal" style="transition-delay: 0.1s;">基于视觉识别与无障碍辅助的安卓自动化引擎。<br>正在由开发者“叶宁”倾力打造中。</p>
+        <div class="reveal" style="transition-delay: 0.2s; margin-top: 30px;">
+            <a href="#" class="cta-btn">加入开发内测预约</a>
+        </div>
+    </header>
+
+    <section class="demo-section reveal">
+        <div class="phone-mockup">
+            <div class="target-img"></div>
+            <div class="scanner-line"></div>
+            <div class="click-ripple"></div>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="feature-card reveal">
+            <h3>👁️ 视觉识图捕捉</h3>
+            <p>通过系统屏幕采集权限实时监控画面。核心识别逻辑本地运算，不仅响应迅速，更能精准锁定您设定的目标元素。</p>
+        </div>
+        <div class="feature-card reveal" style="transition-delay: 0.1s;">
+            <h3>⚡ 无障碍精准操控</h3>
+            <p>调用 Android 系统级无障碍服务，实现像素级的点击与交互执行，确保脚本执行的准确性与稳定性。</p>
+        </div>
+        <div class="feature-card reveal" style="transition-delay: 0.2s;">
+            <h3>🛠️ 开发中 · 敬请期待</h3>
+            <p>“千凝”正处于核心功能打磨阶段，我们将通过极致的技术实现，为您带来前所未有的手机自动化体验。</p>
+        </div>
+    </section>
+
+    <footer style="text-align: center; padding: 40px; color: var(--text-muted);">
+        <p>© 2026 千凝 (QianNing). All rights reserved. | 开发者：叶宁</p>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
