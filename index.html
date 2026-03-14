@@ -3,154 +3,354 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>千凝 - 极简智能安卓自动化引擎</title>
+    <title>叶宁的小屋</title>
     <style>
-        :root {
-            --bg-color: #0d0e12;
-            --text-main: #ffffff;
-            --text-muted: #8a8f98;
-            --accent-color: #00f0ff;
-            --accent-glow: rgba(0, 240, 255, 0.4);
-            --card-bg: #16181d;
-            --border-color: #2a2d35;
+        /* 基础重置与字体 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        body { background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; overflow-x: hidden; }
-
-        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
-        .reveal.active { opacity: 1; transform: translateY(0); }
-
-        nav { position: fixed; top: 0; width: 100%; padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; background: rgba(13, 14, 18, 0.8); backdrop-filter: blur(10px); z-index: 100; border-bottom: 1px solid var(--border-color); }
-        .logo { font-size: 24px; font-weight: 700; letter-spacing: 2px; background: linear-gradient(90deg, #fff, var(--text-muted)); -webkit-background-clip: text; color: transparent; }
-
-        .hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 100px 20px 50px; background: radial-gradient(circle at 50% -20%, #1a2035 0%, var(--bg-color) 70%); }
-        .hero h1 { font-size: clamp(40px, 5vw, 72px); font-weight: 800; line-height: 1.1; margin-bottom: 20px; }
-        .highlight { color: var(--accent-color); text-shadow: 0 0 20px var(--accent-glow); }
-        .hero p { font-size: clamp(16px, 2vw, 20px); color: var(--text-muted); max-width: 600px; margin-bottom: 40px; }
-        .cta-btn { display: inline-block; padding: 16px 40px; font-size: 16px; font-weight: 600; color: #000; background-color: var(--accent-color); border-radius: 30px; text-decoration: none; box-shadow: 0 0 20px var(--accent-glow); transition: all 0.3s ease; }
-
-        .demo-section { padding: 80px 20px; display: flex; justify-content: center; align-items: center; }
-        .phone-mockup { width: 300px; height: 600px; border-radius: 40px; background-color: #000; border: 10px solid #222; position: relative; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
-        .screen-content { padding: 20px; display: flex; flex-direction: column; gap: 15px; opacity: 0.5; }
-        .mock-item { width: 100%; height: 60px; background: #222; border-radius: 12px; }
-        .mock-item.short { width: 60%; }
-
-        .target-img { width: 80px; height: 80px; background: #333; border-radius: 16px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); border: 2px solid transparent; animation: targetHighlight 3s infinite ease-in-out; }
-        .scanner-line { position: absolute; width: 100%; height: 2px; background: var(--accent-color); box-shadow: 0 0 15px 5px var(--accent-glow); top: 0; left: 0; z-index: 10; animation: scanScreen 3s infinite ease-in-out; }
-        .click-ripple { position: absolute; top: 50%; left: 50%; width: 40px; height: 40px; background: rgba(255, 255, 255, 0.8); border-radius: 50%; z-index: 20; transform: translate(-50%, -50%) scale(0); animation: clickAction 3s infinite ease-in-out; }
-
-        /* --- 修正后的动画代码 --- */
-        @keyframes scanScreen {
-            0% { top: 0%; opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { top: 100%; opacity: 0; }
+        body {
+            font-family: 'Inter', 'Poppins', system-ui, -apple-system, sans-serif;
+            background-color: #0a0c0f;
+            color: #ffffff;
+            line-height: 1.6;
+            overflow-x: hidden;
         }
-        @keyframes targetHighlight {
-            0%, 45% { border-color: transparent; }
-            50%, 60% { border-color: var(--accent-color); box-shadow: 0 0 20px var(--accent-glow); }
-            65%, 100% { border-color: transparent; }
-        }
-        @keyframes clickAction {
-            0%, 55% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
-            60% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-            70% { transform: translate(-50%, -50%) scale(4); opacity: 0; }
-            100% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
-        }
-        /* --- 动画代码结束 --- */
 
-        .features { padding: 100px 5%; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto; }
-        .feature-card { background: var(--card-bg); border: 1px solid var(--border-color); padding: 40px 30px; border-radius: 20px; }
-        footer { text-align: center; padding: 40px; border-top: 1px solid var(--border-color); color: var(--text-muted); font-size: 14px; margin-top: 50px; }
+        /* 自定义滚动条 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a1e24;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #3f4a5a;
+            border-radius: 20px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #5a6b80;
+        }
 
-        /* 新增：用于放置QQ号的tooltip样式（只添加，不影响原有元素） */
-        .hero .reveal:last-child {
+        /* 入场动画（丝滑reveal） */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.9s cubic-bezier(0.2, 0.9, 0.1, 1), transform 0.9s cubic-bezier(0.2, 0.9, 0.1, 1);
+            /* 不添加 will-change，交由浏览器自动优化 */
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 背景光晕（无模糊，纯渐变叠加） */
+        .bg-glow {
+            position: fixed;
+            top: -20%;
+            left: -10%;
+            width: 70%;
+            height: 70%;
+            background: radial-gradient(circle at 30% 30%, rgba(70, 130, 200, 0.25), transparent 70%);
+            z-index: -2;
+            pointer-events: none;
+        }
+        .bg-glow-2 {
+            position: fixed;
+            bottom: -10%;
+            right: -5%;
+            width: 60%;
+            height: 60%;
+            background: radial-gradient(circle at 70% 70%, rgba(150, 100, 220, 0.2), transparent 70%);
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        /* 主容器 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 2rem 3rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Hero 区域 */
+        .hero {
+            min-height: 70vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 4rem 0 2rem;
+        }
+
+        .domain-badge {
+            display: inline-block;
+            font-size: 1.1rem;
+            letter-spacing: 3px;
+            color: #a0a8b8;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.05);
+            padding: 0.5rem 1.5rem;
+            border-radius: 60px;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .big-number {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.2rem 0.5rem;
+            margin-bottom: 1.5rem;
+            font-size: clamp(4rem, 15vw, 9rem);
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: 0px;
+        }
+
+        .digit {
+            display: inline-block;
+            background: linear-gradient(145deg, #ffffff, #c0ccff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 20px rgba(90, 160, 255, 0.5);
+            animation: floatGlow 4s infinite alternate ease-in-out;
+            /* 只对动画属性做 will-change 提示，不滥用 */
+            will-change: transform, text-shadow;
+        }
+
+        .digit:nth-child(1) { animation-delay: 0s; }
+        .digit:nth-child(2) { animation-delay: 0.2s; }
+        .digit:nth-child(3) { animation-delay: 0.4s; }
+        .digit:nth-child(4) { animation-delay: 0.6s; }
+        .digit:nth-child(5) { animation-delay: 0.8s; }
+        .digit:nth-child(6) { animation-delay: 1s; }
+
+        @keyframes floatGlow {
+            0% { text-shadow: 0 0 20px rgba(0, 200, 255, 0.5); transform: translateY(0px); }
+            100% { text-shadow: 0 0 40px rgba(180, 130, 255, 0.8); transform: translateY(-5px); }
+        }
+
+        .subhead {
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            color: #cbd5e6;
+            max-width: 700px;
+            margin: 1.5rem auto 0;
+            font-weight: 300;
+            letter-spacing: 1px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 2rem;
+        }
+
+        /* 解释卡片网格 */
+        .meaning-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+            margin: 5rem 0 6rem;
+        }
+
+        .meaning-card {
+            background: rgba(20, 25, 35, 0.8);  /* 纯色半透明，无backdrop-filter */
+            border: 1px solid rgba(255,255,255,0.03);
+            border-radius: 32px;
+            padding: 2rem 1rem 1.8rem;
+            text-align: center;
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 20px 30px -15px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.03) inset;
+            cursor: default;
+        }
+
+        .meaning-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(100, 180, 255, 0.3);
+            box-shadow: 0 30px 40px -15px rgba(0, 180, 255, 0.25), 0 0 0 1px rgba(100, 180, 255, 0.1) inset;
+        }
+
+        .card-number {
+            font-size: 3.2rem;
+            font-weight: 800;
+            line-height: 1;
+            background: linear-gradient(135deg, #fff, #b0d0ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+            filter: drop-shadow(0 0 12px rgba(0,160,255,0.5));
+        }
+
+        .card-title {
+            font-size: 1.6rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            color: #d2e5ff;
+            margin-bottom: 0.75rem;
+        }
+
+        .card-desc {
+            font-size: 0.95rem;
+            color: #9aaec9;
+            max-width: 200px;
+            margin: 0 auto;
+            line-height: 1.5;
+            font-weight: 300;
+        }
+
+        /* 开发者签名 */
+        .signature {
+            text-align: center;
+            margin-top: 4rem;
+            padding: 2rem 0 1rem;
+            font-size: 1.4rem;
+            color: #b5c8e0;
             position: relative;
         }
-        .qq-tooltip {
-            position: absolute;
-            top: calc(100% + 10px);
-            left: 50%;
-            transform: translateX(-50%) translateY(-10px);
-            background: var(--card-bg);
-            border: 1px solid var(--accent-color);
-            color: var(--accent-color);
-            padding: 8px 20px;
-            border-radius: 40px;
-            font-size: 16px;
-            font-weight: 500;
-            white-space: nowrap;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
-            pointer-events: auto;  /* 允许用户复制QQ号 */
-            z-index: 10;
+
+        .signature::before {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #5f9eff, #b78aff, transparent);
+            margin: 0 auto 2rem;
+            border-radius: 2px;
         }
-        .qq-tooltip.show {
-            opacity: 1;
-            visibility: visible;
-            transform: translateX(-50%) translateY(0);
+
+        .signature strong {
+            font-weight: 600;
+            color: white;
+            background: linear-gradient(145deg, #ffffff, #b0d5ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-left: 0.5rem;
+        }
+
+        /* 微小的装饰线条 - 静态 */
+        .dot-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* 响应式 */
+        @media (max-width: 600px) {
+            .meaning-grid {
+                gap: 1.2rem;
+            }
+            .meaning-card {
+                padding: 1.5rem 0.5rem;
+            }
+            .card-number {
+                font-size: 2.8rem;
+            }
+            .card-title {
+                font-size: 1.4rem;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- 背景光晕（无模糊） -->
+    <div class="bg-glow"></div>
+    <div class="bg-glow-2"></div>
+    <div class="dot-pattern"></div>
 
-    <nav>
-        <div class="logo">千凝</div>
-        <!-- 已删除右上角两个链接 -->
-    </nav>
-
-    <header class="hero">
-        <h1 class="reveal">看见，<br>即刻<span class="highlight">触发</span>。</h1>
-        <p class="reveal">基于视觉识别与无障碍辅助的下一代安卓自动化引擎。</p>
-        <!-- 修改点：在按钮容器内添加了qq-tooltip元素，用于展示QQ号 -->
-        <div class="reveal">
-            <a href="#" class="cta-btn">加入内测计划</a>
-            <div class="qq-tooltip">QQ群：1084129729</div>
-        </div>
-    </header>
-
-    <section class="demo-section reveal">
-        <div class="phone-mockup">
-            <div class="screen-content">
-                <div class="mock-item"></div>
-                <div class="mock-item short"></div>
-                <div class="mock-item"></div>
+    <main class="container">
+        <!-- HERO 区域 -->
+        <section class="hero">
+            <span class="domain-badge reveal">211816.xyz</span>
+            <div class="big-number reveal">
+                <span class="digit">2</span>
+                <span class="digit">1</span>
+                <span class="digit">1</span>
+                <span class="digit">8</span>
+                <span class="digit">1</span>
+                <span class="digit">6</span>
             </div>
-            <div class="target-img"></div>
-            <div class="scanner-line"></div>
-            <div class="click-ripple"></div>
+            <p class="subhead reveal">每一个数字，都是一段旅程</p>
+        </section>
+
+        <!-- 数字解释卡片网格 -->
+        <section class="meaning-grid">
+            <div class="meaning-card reveal">
+                <div class="card-number">2</div>
+                <div class="card-title">双向</div>
+                <div class="card-desc">爱与被爱，同时发生<br>彼此奔赴，成就共赢</div>
+            </div>
+            <div class="meaning-card reveal">
+                <div class="card-number">1</div>
+                <div class="card-title">起点</div>
+                <div class="card-desc">千里之行，始于足下<br>初心不忘，方得始终</div>
+            </div>
+            <div class="meaning-card reveal">
+                <div class="card-number">1</div>
+                <div class="card-title">坚持</div>
+                <div class="card-desc">日日不断，滴水穿石<br>久久为功，玉汝于成</div>
+            </div>
+            <div class="meaning-card reveal">
+                <div class="card-number">8</div>
+                <div class="card-title">无限</div>
+                <div class="card-desc">∞ 可能，永无止境<br>探索未知，生生不息</div>
+            </div>
+            <div class="meaning-card reveal">
+                <div class="card-number">1</div>
+                <div class="card-title">热爱</div>
+                <div class="card-desc">心之所向，素履以往<br>满腔热忱，可抵岁月漫长</div>
+            </div>
+            <div class="meaning-card reveal">
+                <div class="card-number">6</div>
+                <div class="card-title">顺遂</div>
+                <div class="card-desc">万事胜意，顺遂无虞<br>皆得所愿，平安喜乐</div>
+            </div>
+        </section>
+
+        <!-- 开发者签名：叶宁 -->
+        <div class="signature reveal">
+            Design & Development <strong>叶宁</strong>
         </div>
-    </section>
-
-    <section class="features">
-        <div class="feature-card reveal"><h3>👁️ 实时视觉捕捉</h3><p>利用屏幕采集权限，实现对目标的精准视觉识别。</p></div>
-        <div class="feature-card reveal"><h3>⚡ 无障碍精准操控</h3><p>调用原生无障碍服务，实现像素级的点击执行，确保操作稳定可靠。</p></div>
-        <div class="feature-card reveal"><h3>🔒 隐私保障</h3><p>用户隐私数据均不会被保存</p></div>
-    </section>
-
-    <footer><p>© 2026 千凝 (QianNing). All rights reserved. | 开发者：叶宁</p></footer>
+    </main>
 
     <script>
-        // 原有的滚动显示动画
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
-        }, { threshold: 0.1 });
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-        // 新增：点击按钮切换QQ号显示，动画丝滑
-        document.addEventListener('DOMContentLoaded', function() {
-            const btn = document.querySelector('.cta-btn');
-            const tooltip = document.querySelector('.qq-tooltip');
-            if (btn && tooltip) {
-                btn.addEventListener('click', function(e) {
-                    e.preventDefault();              // 阻止#链接的默认跳转
-                    tooltip.classList.toggle('show'); // 切换显示类，触发过渡动画
+        (function() {
+            // 丝滑滚动显示动画
+            const revealElements = document.querySelectorAll('.reveal');
+            
+            if (revealElements.length > 0) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('active');
+                        }
+                    });
+                }, { 
+                    threshold: 0.2,
+                    rootMargin: '0px 0px -20px 0px'
                 });
+
+                revealElements.forEach(el => observer.observe(el));
             }
-        });
+
+            // 为卡片依次附加延迟（仅视觉趣味）
+            const cards = document.querySelectorAll('.meaning-card');
+            cards.forEach((card, index) => {
+                card.style.transitionDelay = `${index * 0.08}s`; // 稍快一点
+            });
+        })();
     </script>
 </body>
 </html>
